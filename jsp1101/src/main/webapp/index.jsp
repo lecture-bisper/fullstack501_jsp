@@ -28,6 +28,9 @@
   <h2 class="text-center">세션 사용하기</h2>
   <ul>
     <li><a href="chap06/LoginForm.jsp" target="_blank" class="btn btn-link">LoginForm.jsp</a> </li>
+    <ul>
+      <li><a href="chap06/Login2.jsp" target="_blank" class="btn btn-link">DTO/DAO를 사용한 Login</a> </li>
+    </ul>
   </ul>
 </div>
 </body>
