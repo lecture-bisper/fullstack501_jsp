@@ -7,10 +7,26 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
+<%@ page import="com.bitc.jsp1102.database.JSPBoardDto" %>
+<%@ page import="com.bitc.jsp1102.database.JSPBoardDao" %>
+<%@ page import="java.util.List" %>
+
 <%-- 세션 정보 필요없음 --%>
 <%-- DAO/DTO를 사용하여 데이터 베이스 연결--%>
 <%-- DAO/DTO를 사용하여 게시물 목록 가져오기 --%>
 <%-- 게시물 목록 화면에 출력 --%>
+
+<%
+  List<JSPBoardDto> boardList;
+
+  JSPBoardDao dao = new JSPBoardDao(application);
+  dao.dbOpen();
+
+  boardList = dao.selectBoardList();
+
+  dao.dbClose();
+%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -74,34 +90,30 @@
             </tr>
           </thead>
           <tbody>
+<%--          <%--%>
+<%--            for (JSPBoardDto board : boardList) {--%>
+<%--              out.print("<tr>");--%>
+<%--              out.print("<td>" + board.getBoard_idx() + "</td>");--%>
+<%--              out.print("<td>" + board.getBoard_title() + "</td>");--%>
+<%--              out.print("<td>" + board.getBoard_member_id() + "</td>");--%>
+<%--              out.print("<td>" + board.getBoard_regdate() + "</td>");--%>
+<%--              out.print("<td>" + board.getBoard_cnt() + "</td>");--%>
+<%--              out.print("</tr>");--%>
+<%--            }--%>
+<%--          %>--%>
+          <%
+            for (JSPBoardDto board : boardList) {
+          %>
             <tr>
-              <td>1</td>
-              <td>제목1</td>
-              <td>글쓴이</td>
-              <td>2023-11-02 12:20:00</td>
-              <td>0</td>
+              <td><%=board.getBoard_idx()%></td>
+              <td><%=board.getBoard_title()%></td>
+              <td><%=board.getBoard_member_id()%></td>
+              <td><%=board.getBoard_regdate()%></td>
+              <td><%=board.getBoard_cnt()%></td>
             </tr>
-            <tr>
-              <td>1</td>
-              <td>제목1</td>
-              <td>글쓴이</td>
-              <td>2023-11-02 12:20:00</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>제목1</td>
-              <td>글쓴이</td>
-              <td>2023-11-02 12:20:00</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>제목1</td>
-              <td>글쓴이</td>
-              <td>2023-11-02 12:20:00</td>
-              <td>0</td>
-            </tr>
+          <%
+            }
+          %>
           </tbody>
         </table>
       </div>
