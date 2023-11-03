@@ -65,7 +65,42 @@ public class JSPBoardDao extends JSPBoardConnector {
     return boardList;
   }
 
-//  게시물 상세 보기
+//  User: lecture-bisper
+//  Date: 2023-11-03
+//  Time: 10:19
+//  설명 : 게시물 상세 보기
+//  매개변수 : 게시글번호, int 타입
+//  반환 타입 : JSPBoardDto, 데이터 베이스에서 받아온 게시물의 상세 내용을 반환
+  public JSPBoardDto selectBoardDetail(int idx) {
+    JSPBoardDto board = new JSPBoardDto();
+
+    try {
+      String sql = "SELECT board_idx, board_title, board_content, board_member_id, board_regdate, ";
+      sql += "board_update, board_cnt ";
+      sql += "FROM jspboard ";
+      sql += "WHERE board_idx = ? ";
+
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, idx);
+      rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        board.setBoard_idx(rs.getInt("board_idx"));
+        board.setBoard_title(rs.getString("board_title"));
+        board.setBoard_content(rs.getString("board_content"));
+        board.setBoard_member_id(rs.getString("board_member_id"));
+        board.setBoard_regdate(rs.getString("board_regdate"));
+        board.setBoard_update(rs.getString("board_update"));
+        board.setBoard_cnt(rs.getInt("board_cnt"));
+      }
+    }
+    catch (SQLException e) {
+      System.out.println("----- 데이터 조회 중 오류 발생 -----");
+      System.out.println("SQLException : " + e.getMessage());
+    }
+
+    return board;
+  }
 
 //  User: lecture-bisper
 //  Date: 2023-11-02
@@ -94,11 +129,69 @@ public class JSPBoardDao extends JSPBoardConnector {
     }
   }
 
-//  게시물 수정하기
+//  User: lecture-bisper
+//  Date: 2023-11-03
+//  Time: 10:43
+//  설명 : 게시물 수정하기
+//  매개변수 : int idx, 게시글번호
+//  반환 타입 : 없음
+  public void updateBoard(int idx, String title, String content) {
+    try {
+      String sql = "UPDATE jspboard SET board_title = ?, board_content = ?, board_update = NOW() ";
+      sql += "WHERE board_idx = ? ";
 
-//  게시물 삭제하기
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, title);
+      pstmt.setString(2, content);
+      pstmt.setInt(3, idx);
+      pstmt.executeUpdate();
+    }
+    catch (SQLException e) {
+      System.out.println("----- 데이터 수정 중 오류 발생 -----");
+      System.out.println("SQLException : " + e.getMessage());
+    }
+  }
 
-//  게시물 조회수 올리기
+//  User: lecture-bisper
+//  Date: 2023-11-03
+//  Time: 12:22
+//  설명 : 게시물 삭제하기
+//  매개변수 : int idx, 게시글번호
+//  반환 타입 : 없음
+  public void deleteBoard(int idx) {
+    try {
+      String sql = "DELETE FROM jspboard WHERE board_idx = ? ";
+
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, idx);
+      pstmt.executeUpdate();
+    }
+    catch (SQLException e) {
+      System.out.println("----- 데이터 삭제 중 오류 발생 -----");
+      System.out.println("SQLException : " + e.getMessage());
+    }
+  }
+
+//  User: lecture-bisper
+//  Date: 2023-11-03
+//  Time: 10:43
+//  설명 : 게시물 조회수 올리기
+//  매개변수 : int idx, 게시글번호
+//  반환 타입 : 없음
+  public void updateBoardCount(int idx) {
+    try {
+      String sql = "UPDATE jspboard SET board_cnt = board_cnt + 1 ";
+      sql += "WHERE board_idx = ? ";
+
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, idx);
+      pstmt.executeUpdate();
+    }
+    catch (SQLException e) {
+      System.out.println("----- 데이터 수정 중 오류 발생 -----");
+      System.out.println("SQLException : " + e.getMessage());
+    }
+  }
 }
 
 
