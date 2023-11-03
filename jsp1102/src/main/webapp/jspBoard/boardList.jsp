@@ -106,7 +106,10 @@
           %>
             <tr>
               <td><%=board.getBoard_idx()%></td>
-              <td><%=board.getBoard_title()%></td>
+              <td>
+<%--                boardDetail.jsp로 이동, 파라미터로 글 번호를 전달함, 글번호에 파라미터 명을 idx로 설정--%>
+                <a href="boardDetail.jsp?idx=<%=board.getBoard_idx()%>" class="text-decoration-none"><%=board.getBoard_title()%></a>
+              </td>
               <td><%=board.getBoard_member_id()%></td>
               <td><%=board.getBoard_regdate()%></td>
               <td><%=board.getBoard_cnt()%></td>

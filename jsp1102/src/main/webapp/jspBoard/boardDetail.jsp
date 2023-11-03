@@ -7,6 +7,28 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
+<%@ page import="com.bitc.jsp1102.database.JSPBoardDao" %>
+<%@ page import="com.bitc.jsp1102.database.JSPBoardDto" %>
+
+<%-- 목록 페이지에서 전달받은 파라미터 값 가져오기 (글번호) --%>
+<%-- DAO를 사용하여 DB 연결 --%>
+<%-- DAO를 사용하여 글번호에 맞는 데이터 조회하기 --%>
+<%-- DTO를 사용하여 데이터 받아오기 --%>
+<%-- 화면에 DTO에 닮긴 내용 출력하기 --%>
+
+<%
+  request.setCharacterEncoding("UTF-8");
+
+  int idx = Integer.parseInt(request.getParameter("idx"));
+
+  JSPBoardDto board;
+  JSPBoardDao dao = new JSPBoardDao(application);
+  dao.dbOpen();
+  dao.updateBoardCount(idx);
+  board = dao.selectBoardDetail(idx);
+  dao.dbClose();
+%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -16,6 +38,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
           crossorigin="anonymous"></script>
@@ -24,7 +47,32 @@
 
   </style>
   <script>
+<%--    html이 모두 로드 된 후 아래의 자바스크립트 실행 --%>
+    $(document).ready(function () {
+      // 목록 버튼 클릭 시
+      $("#btn-list").on("click", function() {
+        history.back();
+      });
 
+    //   수정 버튼 클릭 시
+      $("#btn-update").on("click", function () {
+        // id속성값이 frm인 html 태그(form 태그)를 선택하여 자바스크립트 변수 frm에 대입
+        const frm = $("#frm")[0];
+
+        // form 가 가지고 있는 action 속성에 값을 변경
+        frm.action = "./updateBoard.jsp";
+        // form 태그의 submit() 이벤트 발생
+        frm.submit();
+      });
+
+    //   삭제 버튼 클릭 시
+      $("#btn-delete").on("click", function () {
+        const frm = $("#frm")[0];
+
+        frm.action = "./deleteBoard.jsp";
+        frm.submit();
+      });
+    });
   </script>
 
 </head>
@@ -52,46 +100,46 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-sm-4 mx-auto">
-        <form action="" method="post">
+        <form id="frm" method="post">
           <%--          글 번호--%>
           <div class="my-3">
             <label for="idx" class="form-label">글 번호 : </label>
-            <input type="text" class="form-control" id="idx" name="idx" placeholder="글 제목을 입력해주세요" readonly>
+            <input type="text" class="form-control" id="idx" name="idx" readonly value="<%=board.getBoard_idx()%>">
           </div>
           <%--          글 제목--%>
           <div class="my-3">
             <label for="title" class="form-label">글 제목 : </label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="글 비밀번호를 입력해주세요">
+            <input type="text" class="form-control" id="title" name="title" placeholder="글 제목을 입력해주세요" value="<%=board.getBoard_title()%>">
           </div>
           <%--          글 쓴이--%>
           <div class="my-3">
             <label for="id" class="form-label">글 쓴이 : </label>
-            <input type="text" class="form-control" id="id" name="id" placeholder="글 비밀번호를 입력해주세요" readonly>
+            <input type="text" class="form-control" id="id" name="id" readonly value="<%=board.getBoard_member_id()%>">
           </div>
           <%--          글 등록날짜--%>
           <div class="my-3">
             <label for="regdate" class="form-label">등록 날짜 : </label>
-            <input type="text" class="form-control" id="regdate" name="regdate" placeholder="글 비밀번호를 입력해주세요" readonly>
+            <input type="text" class="form-control" id="regdate" name="regdate" readonly value="<%=board.getBoard_regdate()%>">
           </div>
           <%--          조회 수--%>
           <div class="my-3">
             <label for="cnt" class="form-label">조회 수 : </label>
-            <input type="text" class="form-control" id="cnt" name="cnt" placeholder="글 비밀번호를 입력해주세요" readonly>
+            <input type="text" class="form-control" id="cnt" name="cnt" readonly value="<%=board.getBoard_cnt()%>">
           </div>
           <%--          글 내용--%>
           <div class="my-3">
             <label for="content" class="form-label">내용 : </label>
-            <textarea class="form-control" id="content" name="content" rows="5" placeholder="글 내용을 입력해주세요"></textarea>
+            <textarea class="form-control" id="content" name="content" rows="5" placeholder="글 내용을 입력해주세요"><%=board.getBoard_content()%></textarea>
           </div>
           <%--          버튼--%>
           <div class="my-3">
             <div class="row">
               <div class="col-sm">
-                <button type="submit" class="btn btn-secondary">목록</button>
+                <button type="button" class="btn btn-secondary" id="btn-list">목록</button>
               </div>
               <div class="col-sm d-flex justify-content-end">
-                <button type="submit" class="btn btn-warning me-2">수정</button>
-                <button type="reset" class="btn btn-danger">삭제</button>
+                <button type="button" class="btn btn-warning me-2" id="btn-update">수정</button>
+                <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
               </div>
             </div>
           </div>
