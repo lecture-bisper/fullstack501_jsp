@@ -63,7 +63,8 @@
 
 </head>
 <body>
-<header></header>
+<%@ include file="./layout/Menu.jsp" %>
+<%@ include file="./layout/Header.jsp" %>
 
 <main class="container mt-5">
   <section>
@@ -123,7 +124,7 @@
   </section>
 </main>
 
-<footer></footer>
+<%@ include file="./layout/Footer.jsp" %>
 </body>
 </html>
 

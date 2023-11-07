@@ -13,6 +13,14 @@
 <%@ page import="java.util.List" %>
 
 <%
+  String userId = "";
+  String userName = "";
+
+  if (session.getAttribute("userId") != null) {
+    userId = (String)session.getAttribute("userId");
+    userName = (String)session.getAttribute("userName");
+  }
+
   List<BoardDto> boardList;
 
   BoardDao dao = new BoardDao(application);
@@ -43,9 +51,9 @@
 
 </head>
 <body>
-<header>
+<%@ include file="./layout/Menu.jsp" %>
 
-</header>
+<%@ include file="./layout/Header.jsp" %>
 
 <main class="container mt-5">
   <section>
@@ -96,9 +104,7 @@
   </section>
 </main>
 
-<footer>
-
-</footer>
+<%@ include file="./layout/Footer.jsp"%>
 </body>
 </html>
 

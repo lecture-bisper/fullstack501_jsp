@@ -10,6 +10,8 @@
 <%@ page import="com.bitc.jsp1106_mvc1.database.BoardDao" %>
 <%@ page import="com.bitc.jsp1106_mvc1.utils.JSFunction" %>
 
+<jsp:include page="./login/LoginCheck.jsp"></jsp:include>
+
 <%
   request.setCharacterEncoding("UTF-8");
 
@@ -17,8 +19,7 @@
   String id = request.getParameter("id");
 
   // 글 삭제 시 글 작성자가 현재 로그인한 사용자인지 확인
-//  if (id.equals(session.getAttribute("userId").toString())) {
-  if (id.equals("test1")) {
+  if (id.equals(session.getAttribute("userId").toString())) {
     // 작성자와 로그인한 사용자가 같으면 데이터 베이스에 연결 후 글 삭제
     BoardDao dao = new BoardDao(application);
     dao.dbOpen();

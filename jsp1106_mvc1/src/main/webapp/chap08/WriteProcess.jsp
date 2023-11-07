@@ -10,15 +10,9 @@
 
 <%@ page import="com.bitc.jsp1106_mvc1.utils.JSFunction" %>
 
-<%
-  // 현재 로그인 부분 구현이 안 되었으므로 주석처리
-//  if (session.getAttribute("userId") == null) {
-//    out.print("<script>");
-//    out.print("alert('로그인 후 이용해 주세요');");
-//    out.print("location.href = './LoginForm.jsp';");
-//    out.print("</script>");
-//  }
+<jsp:include page="./login/LoginCheck.jsp"></jsp:include>
 
+<%
   request.setCharacterEncoding("UTF-8");
   String title = request.getParameter("title");
   String content = request.getParameter("content");
@@ -27,8 +21,8 @@
   board.setTitle(title);
   board.setContent(content);
 //  세션에서 사용자 ID를 가져옴
-//  board.setId(session.getAttribute("userId").toString());
-  board.setId("test1"); // 현재 로그인 화면 및 로그인 프로세스가 없으므로 더미 데이터로 'test1'을 입력해 줌
+  board.setId(session.getAttribute("userId").toString());
+//  board.setId("test1"); // 현재 로그인 화면 및 로그인 프로세스가 없으므로 더미 데이터로 'test1'을 입력해 줌
 
   BoardDao dao = new BoardDao();
   dao.dbOpen();

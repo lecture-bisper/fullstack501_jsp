@@ -7,14 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%--<%--%>
-<%--  if (session.getAttribute("userId") == null) {--%>
-<%--    out.print("<script>");--%>
-<%--    out.print("alert('로그인 후 이용해 주세요');");--%>
-<%--    out.print("location.href = 'LoginForm.jsp'");--%>
-<%--    out.print("</script>");--%>
-<%--  }--%>
-<%--%>--%>
+<jsp:include page="./login/LoginCheck.jsp"></jsp:include>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -44,7 +37,8 @@
 
 </head>
 <body>
-<header></header>
+<%@ include file="./layout/Menu.jsp" %>
+<%@ include file="./layout/Header.jsp" %>
 
 <main class="container mt-5">
   <section>
@@ -70,7 +64,7 @@
   </section>
 </main>
 
-<footer></footer>
+<%@ include file="./layout/Footer.jsp" %>
 </body>
 </html>
 

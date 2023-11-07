@@ -7,31 +7,43 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MVC1 게시판 - 수정 처리 페이지</title>
+<%@ page import="com.bitc.jsp1106_mvc1.database.BoardDao" %>
+<%@ page import="com.bitc.jsp1106_mvc1.database.BoardDto" %>
+<%@ page import="com.bitc.jsp1106_mvc1.utils.JSFunction" %>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-          crossorigin="anonymous"></script>
+<jsp:include page="./login/LoginCheck.jsp"></jsp:include>
 
-  <style>
+<%
+  request.setCharacterEncoding("UTF-8");
 
-  </style>
-  <script>
+  int num = Integer.parseInt(request.getParameter("num"));
+  String title = request.getParameter("title");
+  String content = request.getParameter("content");
+  String id = request.getParameter("id");
 
-  </script>
+  if (id.equals(session.getAttribute("userId").toString()) == false) {
+    JSFunction.alertBack("작성자만 수정할 수 있습니다.", out);
+    return;
+  }
+  else {
+    BoardDto board = new BoardDto();
+    board.setNum(num);
+    board.setTitle(title);
+    board.setContent(content);
 
-</head>
-<body>
-<h1>수정 처리 페이지</h1>
-</body>
-</html>
+    BoardDao dao = new BoardDao();
+    dao.dbOpen();
+    int result = dao.updateEdit(board);
+    dao.dbClose();
+
+    if (result > 0) {
+      response.sendRedirect("./View.jsp?num=" + num);
+    }
+    else {
+      JSFunction.alertBack("데이터 수정 중 오류가 발생했습니다.", out);
+    }
+  }
+%>
 
 
 
