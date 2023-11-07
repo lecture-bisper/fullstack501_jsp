@@ -4,8 +4,10 @@ import jakarta.servlet.ServletContext;
 
 import java.sql.SQLException;
 
+// 데이터 베이스 접속을 위한 JDBConnect 클래스를 상속받고 사용자 정보를 제어하기 위한 클래스
 public class MemberDao extends JDBConnect {
 
+//  부모 클래스의 생성자를 호출하여 사용하기 위한 생성자
   public MemberDao() {
     super();
   }
@@ -18,7 +20,7 @@ public class MemberDao extends JDBConnect {
     super(dbDriver, dbUrl, dbUserId, dbUserPw);
   }
 
-//  회원 가입
+//  회원 가입을 위한 메소드
   public int insertMember(MemberDto member) {
     int result = 0;
 
@@ -41,7 +43,7 @@ public class MemberDao extends JDBConnect {
     return result;
   }
 
-//  사용자 존재 여부 확인
+//  사용자 존재 여부 확인을 위한 메소드
   public boolean isMember(String userId, String userPw) {
     boolean result = false;
 
@@ -68,7 +70,7 @@ public class MemberDao extends JDBConnect {
     return result;
   }
 
-//  사용자 정보 가져오기
+//  사용자 정보를 가져오기 위한 메소드
   public MemberDto selectMember(String userId) {
     MemberDto member = new MemberDto();
 

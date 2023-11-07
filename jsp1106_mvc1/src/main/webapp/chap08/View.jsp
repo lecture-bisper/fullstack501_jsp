@@ -10,13 +10,19 @@
 <%@ page import="com.bitc.jsp1106_mvc1.database.BoardDto" %>
 <%@ page import="com.bitc.jsp1106_mvc1.database.BoardDao" %>
 
+<%-- 상세 글 보기 페이지는 로그인이 필요없으므로 로그인 상태 체크를 위한 LoginCheck 파일을 불러오지 않음 --%>
+
 <%
+  // 현재 글에 대한 상세 정보를 가져와야 하므로 데이터 베이스 연결 및 글 정보 가져오기
   request.setCharacterEncoding("UTF-8");
 
+//  현재 글 번호를 파라미터 값에서 가져오기
   int num = Integer.parseInt(request.getParameter("num"));
 
+//  데이터 베이스 연결
   BoardDao dao = new BoardDao(application);
   dao.dbOpen();
+//  상세 글 정보 가져오기
   BoardDto board = dao.selectView(num);
   dao.dbClose();
 %>
@@ -39,23 +45,35 @@
     .caption2 { width: 7%; }
   </style>
   <script>
+    // html 이 모두 로딩된 이후 아래의 자바스크립트가 동작하도록 하는 이벤트
     $(document).ready(function () {
+      // 수정 버튼 클릭
       $("#btn-edit").on("click", function () {
+        // 글번호를 검색하여 가져오기
         const num = $("#num").val();
+        // 글 수정 페이지로 이동, 파라미터 값으로 글 번호를 추가함
         location.href = "./Edit.jsp?num=" + num;
       });
 
+      // 삭제 버튼 클릭
       $("#btn-delete").on("click", function () {
+        // 확인/취소 버튼이 있는 알림창 출력
         const confirmed = confirm("정말로 삭제 하시겠습니까?");
 
+        // 확인 버튼 클릭 시 삭제
         if (confirmed == true) {
+          // form 태그 검색
           const frm = $("#frm")[0];
+          // form 태그의 action 속성 변경, DeleteProcess.jsp로 설정
           frm.action = "./DeleteProcess.jsp";
+          // submit 이벤트 발생
           frm.submit();
         }
       });
 
+      // 목록 버튼 클릭
       $("#btn-list").on("click", function () {
+        // 목록 페이지로 이동
         location.href = "./List.jsp";
       });
     });
@@ -66,6 +84,7 @@
 <%@ include file="./layout/Menu.jsp" %>
 <%@ include file="./layout/Header.jsp" %>
 
+<%-- 데이터베이스에서 가져온 상세 글 내용을 화면에 출력--%>
 <main class="container mt-5">
   <section>
     <form id="frm" method="post">

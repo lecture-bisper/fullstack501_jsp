@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
+<%-- 중복되는 메뉴 내용 --%>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
   <div class="container-fluid">
     <a href="/index.jsp" class="navbar-brand">회원제 게시판</a>
@@ -23,6 +24,8 @@
     </ul>
     <div class="ms-auto">
       <%
+        // 세션 정보를 가지고 로그인 상태를 확인
+//        로그인 상태에 따라 화면 UI 변경
         if (session.getAttribute("userId") == null) {
           out.print("<a href='login/LoginForm.jsp' class='btn btn-outline-success'>로그인</a>");
         }

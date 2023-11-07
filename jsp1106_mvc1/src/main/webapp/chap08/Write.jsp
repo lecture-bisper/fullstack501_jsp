@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
+<%-- 로그인 상태에서만 글쓰기를 할 수 있으므로 로그인 상태 체크를 위한 LoginCheck 파일 불러오기 --%>
 <jsp:include page="./login/LoginCheck.jsp"></jsp:include>
 
 <!DOCTYPE html>
@@ -27,10 +28,11 @@
 
   </style>
   <script>
+    // html이 모두 로딩된 이후 아래의 자바스크립트가 동작하도록 하는 이벤트
     $(document).ready(function () {
+      // 버튼 클릭 시 리스트 페이지로 이동
       $("#btn-list").on("click", function () {
         location.href = "./List.jsp";
-        // history.back();
       });
     });
   </script>

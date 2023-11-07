@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+// 데이터 베이스 접속을 위한 JDBConnect 클래스를 상속받고 게시판 정보를 제어하기 위한 클래스
 public class BoardDao extends JDBConnect {
   public BoardDao() {
     super();
@@ -19,7 +20,7 @@ public class BoardDao extends JDBConnect {
     super(dbDriver, dbUrl, dbUserId, dbUserPw);
   }
 
-//  게시물 목록
+//  게시물 목록을 가져오기 위한 메소드
 //  1단계 전체 목록 가져오기
 //  2단계 검색된 목록 가져오기
   public List<BoardDto> selectList() {
@@ -51,7 +52,7 @@ public class BoardDao extends JDBConnect {
     return boardList;
   }
 
-//  게시물 상세
+//  게시물 상세 정보를 가져오기 위한 메소드
 //  1단계 사용자 이름 없이 가져오기
 //  2단계 사용자 이름도 함께 가져오기, 사용자 이름을 가져오기 위해서 SQL문은 join해야 함
   public BoardDto selectView(int num) {
@@ -83,7 +84,7 @@ public class BoardDao extends JDBConnect {
     return board;
   }
 
-//  게시물 등록
+//  게시물 등록을 위한 메소드
   public int insertWrite(BoardDto board) {
     int result = 0;
 
@@ -106,7 +107,7 @@ public class BoardDao extends JDBConnect {
     return result;
   }
 
-//  게시물 수정
+//  게시물 수정을 위한 메소드
   public int updateEdit(BoardDto board) {
     int result = 0;
 
@@ -128,7 +129,7 @@ public class BoardDao extends JDBConnect {
     return result;
   }
 
-//  게시물 조회수 증가
+//  게시물 조회수 증가를 위한 메소드
   public void updateVisitCount(int num) {
     try {
       String sql = "UPDATE board SET visitcount = visitcount + 1 WHERE num = ? ";
@@ -144,7 +145,7 @@ public class BoardDao extends JDBConnect {
     }
   }
 
-//  게시물 삭제
+//  게시물 삭제를 위한 메소드
   public int deletePost(int num) {
     int result = 0;
 

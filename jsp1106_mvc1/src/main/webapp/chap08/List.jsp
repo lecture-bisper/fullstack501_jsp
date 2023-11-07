@@ -7,20 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
+<%--게시판 정보를 가져오기 위해서 필요한 클래스 import --%>
 <%@ page import="com.bitc.jsp1106_mvc1.database.BoardDto" %>
 <%@ page import="com.bitc.jsp1106_mvc1.database.BoardDao" %>
 
 <%@ page import="java.util.List" %>
 
 <%
-  String userId = "";
-  String userName = "";
-
-  if (session.getAttribute("userId") != null) {
-    userId = (String)session.getAttribute("userId");
-    userName = (String)session.getAttribute("userName");
-  }
-
+  // 게시판 목록 가져오기
   List<BoardDto> boardList;
 
   BoardDao dao = new BoardDao(application);
@@ -51,8 +45,9 @@
 
 </head>
 <body>
+<%-- 메뉴 파일 불러오기 --%>
 <%@ include file="./layout/Menu.jsp" %>
-
+<%-- Header 파일 불러오기 --%>
 <%@ include file="./layout/Header.jsp" %>
 
 <main class="container mt-5">
@@ -78,10 +73,12 @@
           </thead>
           <tbody>
           <%
+            // 가져온 게시물 목록을 화면에 출력
             for (BoardDto board : boardList) {
           %>
             <tr>
               <td><%=board.getNum()%></td>
+<%--              클릭 시 상세 페이지로 이동 --%>
               <td class="text-start"><a href="View.jsp?num=<%=board.getNum()%>" class="text-decoration-none"><%=board.getTitle()%></a></td>
               <td><%=board.getId()%></td>
               <td><%=board.getVisitcount()%></td>
@@ -104,6 +101,7 @@
   </section>
 </main>
 
+<%-- Footer 파일 가져오기 --%>
 <%@ include file="./layout/Footer.jsp"%>
 </body>
 </html>

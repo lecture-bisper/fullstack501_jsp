@@ -1,5 +1,6 @@
 package com.bitc.jsp1106_mvc1.database;
 
+// 게시판 정보를 데이터 베이스에 전달하거나 받아오기 위한 DTO 클래스
 public class BoardDto {
   private int num;
   private String title;

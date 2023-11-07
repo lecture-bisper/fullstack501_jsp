@@ -10,11 +10,12 @@
 <%@ page import="com.bitc.jsp1106_mvc1.database.BoardDao" %>
 <%@ page import="com.bitc.jsp1106_mvc1.utils.JSFunction" %>
 
+<%-- 로그인 상태에서만 글삭제를 할 수 있으므로 로그인 상태 체크를 위한 LoginCheck 파일 불러오기 --%>
 <jsp:include page="./login/LoginCheck.jsp"></jsp:include>
 
 <%
   request.setCharacterEncoding("UTF-8");
-
+// 글삭제를 위해 필요한 정보 파라미터값에서 가져오기
   int num = Integer.parseInt(request.getParameter("num"));
   String id = request.getParameter("id");
 
@@ -26,10 +27,13 @@
     int result = dao.deletePost(num);
     dao.dbClose();
 
+//    정상적으로 삭제되었는지 확인
     if (result == 1) {
+//      정상 삭제 시 목록 페이지로 이동
       JSFunction.alertLocation("삭제되었습니다.", "./List.jsp", out);
     }
     else {
+//      오류 시 이전 페이지로 이동
       JSFunction.alertBack("삭제 중 오류가 발생했습니다.", out);
     }
   }
