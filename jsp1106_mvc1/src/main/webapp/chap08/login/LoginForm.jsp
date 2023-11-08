@@ -49,7 +49,7 @@
             <button type="submit" class="btn btn-primary">로그인</button>
           </div>
           <div class="my-3 d-flex justify-content-end">
-            <a type="button" class="btn btn-link text-info">회원 가입</a>
+            <a href="./MemberJoin.jsp" class="btn btn-link text-info">회원 가입</a>
           </div>
         </form>
       </div>

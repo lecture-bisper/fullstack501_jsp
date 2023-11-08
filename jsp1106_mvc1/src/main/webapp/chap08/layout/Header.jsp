@@ -39,6 +39,10 @@
     case "LoginForm.jsp":
       pageName = "로그인";
       break;
+
+    case "MemberJoin.jsp":
+      pageName = "회원 가입";
+      break;
   }
 %>
 
