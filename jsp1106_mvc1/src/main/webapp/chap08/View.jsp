@@ -22,6 +22,8 @@
 //  데이터 베이스 연결
   BoardDao dao = new BoardDao(application);
   dao.dbOpen();
+//  글 조회수 증가
+  dao.updateVisitCount(num);
 //  상세 글 정보 가져오기
   BoardDto board = dao.selectView(num);
   dao.dbClose();
