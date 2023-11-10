@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+  <servlet>
+<!--    서블릿 이름 -->
+    <servlet-name>HelloServlet</servlet-name>
+<!--    해당 이름으로 설정한 서블릿의 클래스 파일 지정 -->
+    <servlet-class>com.bitc.jsp1110.servlet.HelloServlet</servlet-class>
+  </servlet>
+<!--  위의 servlet 태그에서 설정한 서블릿과 클라이언트에서 접속할 url을 지정함 -->
+  <servlet-mapping>
+<!--    servlet 태그의 servlet-name 과 동일해야 함-->
+    <servlet-name>HelloServlet</servlet-name>
+<!--    클라이언트가 실제로 접속할 주소 설정 -->
+    <url-pattern>/ServletTest.do</url-pattern>
+  </servlet-mapping>
+</web-app>
