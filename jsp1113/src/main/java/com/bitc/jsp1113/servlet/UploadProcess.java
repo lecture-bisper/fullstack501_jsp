@@ -19,6 +19,7 @@ import java.io.IOException;
 @MultipartConfig(maxFileSize = 1024 * 1024 * 1, maxRequestSize = 1024 * 1024 * 10)
 public class UploadProcess extends HttpServlet {
 
+//  클라이언트에서 form 태그의 method 속성이 post로 설정되어 있으면 doPost로 데이터를 전달함
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     try {
