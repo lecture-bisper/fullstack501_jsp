@@ -32,6 +32,8 @@
 
   <ul>
     <li><a href="./chap13/FileUploadMain.jsp" target="_blank" class="btn btn-link">FileUploadMain</a></li>
+    <li><a href="./chap13/MultiUploadMian.jsp" target="_blank" class="btn btn-link">MultiUploadMian</a></li>
+    <li><a href="./chap13/FileList.jsp" target="_blank" class="btn btn-link">FileList</a></li>
   </ul>
 </div>
 </body>
