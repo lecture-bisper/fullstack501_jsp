@@ -33,24 +33,25 @@
 <c:import url="../layout/Header.jsp"></c:import>
 
 <main class="container mt-5">
-  <div class="row">
-    <div class="col-sm">
-      <table class="table table-hover table-striped text-center">
-        <colgroup>
-          <col style="width: 10%">
-          <col style="width: 45%">
-          <col style="width: 15%">
-          <col style="width: 20%">
-          <col style="width: 10%">
-        </colgroup>
-        <thead>
+  <section>
+    <div class="row">
+      <div class="col-sm">
+        <table class="table table-hover table-striped text-center">
+          <colgroup>
+            <col style="width: 10%">
+            <col style="width: 45%">
+            <col style="width: 15%">
+            <col style="width: 20%">
+            <col style="width: 10%">
+          </colgroup>
+          <thead>
           <th>글번호</th>
           <th>글제목</th>
           <th>글쓴이</th>
           <th>등록일</th>
           <th>조회수</th>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
           <c:choose>
             <c:when test="${empty boardList}">
               <tr>
@@ -61,7 +62,9 @@
               <c:forEach var="item" items="${boardList}" varStatus="loop">
                 <tr>
                   <td>${item.idx}</td>
-                  <td class="text-start">${item.title}</td>
+                  <td class="text-start">
+                    <a href="/mvcboard/view.do?idx=${item.idx}" class="text-decoration-none">${item.title}</a>
+                  </td>
                   <td>${item.name}</td>
                   <td>${item.postdate}</td>
                   <td>${item.visitcount}</td>
@@ -69,10 +72,18 @@
               </c:forEach>
             </c:otherwise>
           </c:choose>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
+    <div class="row mt-3">
+      <div class="col-sm">
+        <div class="d-flex justify-content-end">
+          <a href="/mvcboard/write.do" class="btn btn-primary">글쓰기</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <%@ include file="../layout/Footer.jsp" %>
