@@ -33,7 +33,27 @@
 <c:import url="../layout/Header.jsp"></c:import>
 
 <main class="container mt-5">
-  <h1>Pass.jsp</h1>
+  <section>
+    <div class="row">
+      <div class="col-sm">
+        <form action="/mvcboard/pass.do" method="post">
+          <div class="row mt-3">
+            <div class="col-sm-6 mx-auto">
+              <div class="input-group">
+                <div class="form-floating">
+                  <input type="password" class="form-control" id="pass" name="pass" placeholder="비밀번호를 입력해주세요">
+                  <label for="pass">비밀번호를 입력해주세요</label>
+                </div>
+                <button type="submit" class="btn btn-outline-primary" style="width: 15%">확인</button>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="mode" value="${mode}">
+          <input type="hidden" name="idx" value="${idx}">
+        </form>
+      </div>
+    </div>
+  </section>
 </main>
 
 <%@ include file="../layout/Footer.jsp" %>
