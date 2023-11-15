@@ -33,7 +33,46 @@
 <c:import url="../layout/Header.jsp"></c:import>
 
 <main class="container mt-5">
-  <h1>List.jsp</h1>
+  <div class="row">
+    <div class="col-sm">
+      <table class="table table-hover table-striped text-center">
+        <colgroup>
+          <col style="width: 10%">
+          <col style="width: 45%">
+          <col style="width: 15%">
+          <col style="width: 20%">
+          <col style="width: 10%">
+        </colgroup>
+        <thead>
+          <th>글번호</th>
+          <th>글제목</th>
+          <th>글쓴이</th>
+          <th>등록일</th>
+          <th>조회수</th>
+        </thead>
+        <tbody>
+          <c:choose>
+            <c:when test="${empty boardList}">
+              <tr>
+                <td colspan="5">등록된 게시물이 없습니다.</td>
+              </tr>
+            </c:when>
+            <c:otherwise>
+              <c:forEach var="item" items="${boardList}" varStatus="loop">
+                <tr>
+                  <td>${item.idx}</td>
+                  <td class="text-start">${item.title}</td>
+                  <td>${item.name}</td>
+                  <td>${item.postdate}</td>
+                  <td>${item.visitcount}</td>
+                </tr>
+              </c:forEach>
+            </c:otherwise>
+          </c:choose>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </main>
 
 <%@ include file="../layout/Footer.jsp" %>
