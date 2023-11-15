@@ -32,7 +32,9 @@
 <body>
 <c:import url="../layout/Header.jsp"></c:import>
 
-<h1>Write.jsp</h1>
+<main class="container mt-5">
+  <h1>Write.jsp</h1>
+</main>
 
 <%@ include file="../layout/Footer.jsp" %>
 </body>

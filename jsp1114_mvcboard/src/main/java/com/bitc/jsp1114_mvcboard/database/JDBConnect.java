@@ -14,7 +14,7 @@ public class JDBConnect {
   private String dbUrl;
   private String dbUserId;
   private String dbUserPw;
-  protected boolean isOpen = false;
+  protected boolean dbIsOpen = false;
 
   public JDBConnect() {
     this(
@@ -41,19 +41,19 @@ public class JDBConnect {
     this.dbUserPw = dbUserPw;
   }
 
-  public boolean isOpen() {
-    return isOpen;
+  public boolean dbIsOpen() {
+    return this.dbIsOpen;
   }
 
   public void dbOpen() {
     try {
       Class.forName(this.dbDriver);
       conn = DriverManager.getConnection(this.dbUrl, this.dbUserId, this.dbUserPw);
-      this.isOpen = true;
+      this.dbIsOpen = true;
       System.out.println("----- 데이터 베이스가 연결되었습니다. -----");
     }
     catch (Exception e) {
-      this.isOpen = false;
+      this.dbIsOpen = false;
       System.out.println("----- 데이터 베이스 연결이 실패하였습니다. -----");
       System.out.println(e.getMessage());
     }
@@ -65,7 +65,7 @@ public class JDBConnect {
       if (stmt != null) { stmt.close(); }
       if (pstmt != null) { pstmt.close(); }
       if (conn != null) { conn.close(); }
-      this.isOpen = false;
+      this.dbIsOpen = false;
       System.out.println("----- 데이터 베이스 리소스를 모두 해제하였습니다. -----");
     }
     catch (Exception e) {
