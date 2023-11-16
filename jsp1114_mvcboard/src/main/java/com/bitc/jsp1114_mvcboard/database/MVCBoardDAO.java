@@ -54,14 +54,16 @@ public class MVCBoardDAO extends JDBConnect {
     int result = 0;
 
     try {
-      String sql = "INSERT INTO mvcboard (title, content, name, pass, postdate) ";
-      sql += "VALUES (?, ?, ?, ?, NOW()) ";
+      String sql = "INSERT INTO mvcboard (title, content, name, pass, ofile, sfile, postdate) ";
+      sql += "VALUES (?, ?, ?, ?, ?, ?, NOW()) ";
 
       pstmt = conn.prepareStatement(sql);
       pstmt.setString(1, board.getTitle());
       pstmt.setString(2, board.getContent());
       pstmt.setString(3, board.getName());
       pstmt.setString(4, board.getPass());
+      pstmt.setString(5, board.getOfile());
+      pstmt.setString(6, board.getSfile());
 
       result = pstmt.executeUpdate();
     }
@@ -77,7 +79,7 @@ public class MVCBoardDAO extends JDBConnect {
     MVCBoardDTO board = new MVCBoardDTO();
 
     try {
-      String sql = "SELECT idx, title, content, name, ofile, downcount, visitcount, postdate ";
+      String sql = "SELECT idx, title, content, name, ofile, sfile, downcount, visitcount, postdate ";
       sql += "FROM mvcboard ";
       sql += "WHERE idx = ? ";
 
@@ -91,6 +93,7 @@ public class MVCBoardDAO extends JDBConnect {
         board.setContent(rs.getString("content"));
         board.setName(rs.getString("name"));
         board.setOfile(rs.getString("ofile"));
+        board.setSfile(rs.getString("sfile"));
         board.setDowncount(rs.getInt("downcount"));
         board.setVisitcount(rs.getInt("visitcount"));
         board.setPostdate(rs.getString("postdate"));
@@ -108,13 +111,15 @@ public class MVCBoardDAO extends JDBConnect {
     int result = 0;
 
     try {
-      String sql = "UPDATE mvcboard SET title = ?, content = ? ";
+      String sql = "UPDATE mvcboard SET title = ?, content = ?, ofile = ?, sfile = ? ";
       sql += "WHERE idx = ? ";
 
       pstmt = conn.prepareStatement(sql);
       pstmt.setString(1, board.getTitle());
       pstmt.setString(2, board.getContent());
-      pstmt.setInt(3, board.getIdx());
+      pstmt.setString(3, board.getOfile());
+      pstmt.setString(4, board.getSfile());
+      pstmt.setInt(5, board.getIdx());
 
       result = pstmt.executeUpdate();
     }
