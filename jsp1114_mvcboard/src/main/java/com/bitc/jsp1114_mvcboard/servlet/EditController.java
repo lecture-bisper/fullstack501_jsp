@@ -2,17 +2,21 @@ package com.bitc.jsp1114_mvcboard.servlet;
 
 import com.bitc.jsp1114_mvcboard.database.MVCBoardDAO;
 import com.bitc.jsp1114_mvcboard.database.MVCBoardDTO;
+import com.bitc.jsp1114_mvcboard.utils.FileUtil;
 import com.bitc.jsp1114_mvcboard.utils.JSFunction;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
 @WebServlet(name = "edit", value = "/mvcboard/edit.do")
+@MultipartConfig(maxFileSize = 1024 * 1024 * 1, maxRequestSize = 1024 * 1024 * 10)
 public class EditController extends HttpServlet {
 
 //  글 번호에 해당하는 정보를 화면에 출력
@@ -37,16 +41,40 @@ public class EditController extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 //    수정할 정보를 파라미터 값으로 가져옴
-    String title = req.getParameter("title");
-    String content = req.getParameter("content");
-    int idx = Integer.parseInt(req.getParameter("idx"));
+    String title = req.getParameter("title");// 수정할 title 내용
+    String content = req.getParameter("content"); // 수정할 content 내용
+    int idx = Integer.parseInt(req.getParameter("idx")); // 데이터를 수정할 글번호
+    String oldSaveFile = req.getParameter("oldSaveFile"); // 이전에 저장되어 있었던 첨부파일명(삭제예정)
 
-//    가져온 정보를 DTO 타입으로 저장
+    //    가져온 정보를 DTO 타입으로 저장
     MVCBoardDTO board = new MVCBoardDTO();
     board.setIdx(idx);
     board.setTitle(title);
     board.setContent(content);
     
+//    새로 업로드 된 파일 처리
+    String saveDir = "C:/upload";
+    String oriFileName = "";
+    try {
+      oriFileName = FileUtil.uploadFile(req, saveDir);
+    }
+    catch (Exception e) {
+      JSFunction.alertBack("파일 업로드 중 오류 입니다.", res);
+      return;
+    }
+    
+//    새로 업로드 된 파일명 수정
+    if (!oriFileName.equals("")) {
+      String saveFileName = FileUtil.renameFile(oriFileName, saveDir);
+      
+//      새로 업로드 된 파일명 DTO 객체에 저장
+      board.setOfile(oriFileName);
+      board.setSfile(saveFileName);
+      
+//      이전 파일 삭제
+      FileUtil.deleteFile(saveDir, oldSaveFile);
+    }
+
 //    데이터 베이스 연결
     MVCBoardDAO dao = new MVCBoardDAO();
     dao.dbOpen();

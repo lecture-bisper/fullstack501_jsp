@@ -41,8 +41,11 @@
   <section>
     <div class="row">
       <div class="col-sm">
-        <form action="/mvcboard/edit.do" method="post">
+        <form action="/mvcboard/edit.do" method="post" enctype="multipart/form-data">
+<%--          글번호와 일치하는 데이터를 수정하기 위해 글 번호를 input 태그에 저장 --%>
           <input type="hidden" name="idx" value="${board.idx}">
+<%--          이전에 업로드된 파일도 삭제하기 위해서 이전에 저장된 파일명을 input 태그에 저장 --%>
+          <input type="hidden" name="oldSaveFile" value="${board.sfile}">
           <div class="row mt-3">
             <div class="col-sm">
               <div class="form-floating">
@@ -57,6 +60,11 @@
                 <textarea class="form-control" id="content" name="content" placeholder="내용을 입력하세요" style="height: 200px;">${board.content}</textarea>
                 <label for="content">내용을 입력하세요</label>
               </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-sm">
+              <input type="file" class="form-control" id="upload-file" name="uploadFile">
             </div>
           </div>
           <div class="row mt-3">
