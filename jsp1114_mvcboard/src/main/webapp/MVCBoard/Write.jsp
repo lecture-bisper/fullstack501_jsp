@@ -43,7 +43,7 @@
   <section>
     <div class="row">
       <div class="col-sm">
-        <form action="/mvcboard/write.do" method="post">
+        <form action="/mvcboard/write.do" method="post" enctype="multipart/form-data">
           <div class="row mt-3">
             <div class="col-sm">
               <div class="form-floating">
@@ -72,6 +72,11 @@
                 <textarea class="form-control" id="content" name="content" rows="5" placeholder="내용을 입력하세요" style="height: 200px"></textarea>
                 <label for="content">내용을 입력하세요</label>
               </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-sm">
+              <input type="file" class="form-control" id="upload-file" name="uploadFile">
             </div>
           </div>
           <div class="row mt-3">
