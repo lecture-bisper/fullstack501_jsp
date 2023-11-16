@@ -19,4 +19,8 @@
     <param-name>MySqlUserPw</param-name>
     <param-value>fullstack501</param-value>
   </context-param>
+  <context-param>
+    <param-name>FileUploadFolder</param-name>
+    <param-value>c:/upload</param-value>
+  </context-param>
 </web-app>
