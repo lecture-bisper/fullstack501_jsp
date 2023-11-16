@@ -48,6 +48,7 @@ public class PassController extends HttpServlet {
 //    비밀 번호가 같으면 수정/삭제 진행 후 list.do 페이지로 이동
       if (mode.equals("update")) {
 //        수정 시 동작
+        res.sendRedirect("/mvcboard/edit.do?idx=" + idx);
       }
       else if (mode.equals("delete")) {
 //        삭제 시 동작
