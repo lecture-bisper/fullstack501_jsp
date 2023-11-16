@@ -1,6 +1,8 @@
 package com.bitc.jsp1114_mvcboard.servlet;
 
 import com.bitc.jsp1114_mvcboard.database.MVCBoardDAO;
+import com.bitc.jsp1114_mvcboard.database.MVCBoardDTO;
+import com.bitc.jsp1114_mvcboard.utils.FileUtil;
 import com.bitc.jsp1114_mvcboard.utils.JSFunction;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -52,6 +54,12 @@ public class PassController extends HttpServlet {
       }
       else if (mode.equals("delete")) {
 //        삭제 시 동작
+//        글 번호에 맞는 데이터를 가져옴
+        MVCBoardDTO board = dao.selectMVCBoardDetail(idx);
+//        파일 삭제, 가져온 데이터 중 저장된 파일 이름을 매개 변수로 전달함
+        FileUtil.deleteFile("C:/upload", board.getSfile());
+
+//        데이터 베이스의 내용 삭제
         int result = dao.deleteMVCBoard(idx);
         if (dao.dbIsOpen()) {
           dao.dbClose();
