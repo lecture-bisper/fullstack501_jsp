@@ -71,6 +71,15 @@
             <textarea class="form-control" id="content" name="content" rows="5" readonly>${board.content}</textarea>
           </div>
         </div>
+        <c:if test="${not empty board.ofile}">
+          <div class="row mt-3">
+            <div class="col-sm">
+              <div class="border rounded">
+                <a href="/mvcboard/download.do?ofile=${board.ofile}&sfile=${board.sfile}&idx=${board.idx}" class="btn btn-link">${board.ofile} 다운로드</a>
+              </div>
+            </div>
+          </div>
+        </c:if>
         <div class="row mt-3">
           <div class="col-sm">
             <button type="button" class="btn btn-secondary" id="btn-list">목록</button>

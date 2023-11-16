@@ -23,6 +23,9 @@ public class ViewController extends HttpServlet {
     MVCBoardDAO dao = new MVCBoardDAO();
     dao.dbOpen();
 
+//    글 번호에 해당하는 글의 조회수 증가
+    dao.updateVisitCount(idx);
+
 //    글번호에 해당하는 글 상세 정보를 가져옴
     MVCBoardDTO board = dao.selectMVCBoardDetail(idx);
     if (dao.dbIsOpen()) {
