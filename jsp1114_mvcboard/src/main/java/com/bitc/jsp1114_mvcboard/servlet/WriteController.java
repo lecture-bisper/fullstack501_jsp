@@ -39,7 +39,7 @@ public class WriteController extends HttpServlet {
     board.setContent(req.getParameter("content"));
 
 //    업로드 된 파일 처리 (서버의 특정 폴더에 저장)
-    String saveDir = "C:/upload";
+    String saveDir = this.getServletContext().getInitParameter("FileUploadFolder"); // web.xml 설정 사용
     String originalFileName = "";
     try {
       originalFileName = FileUtil.uploadFile(req, saveDir);

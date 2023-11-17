@@ -19,9 +19,10 @@ public class DownloadController extends HttpServlet {
     String ofile = req.getParameter("ofile");
     String sfile = req.getParameter("sfile");
     int idx = Integer.parseInt(req.getParameter("idx"));
+    String saveDir = this.getServletContext().getInitParameter("FileUploadFolder"); // web.xml 설정 사용
 
 //    FileUtil 을 활용하여 파일 다운로드
-    FileUtil.download(ofile, sfile, "C:/upload", req, res);
+    FileUtil.download(ofile, sfile, saveDir, req, res);
 
 //    다운로드 수 증가
     MVCBoardDAO dao = new MVCBoardDAO();

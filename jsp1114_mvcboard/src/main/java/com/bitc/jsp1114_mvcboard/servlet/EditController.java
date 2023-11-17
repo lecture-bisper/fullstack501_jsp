@@ -53,7 +53,7 @@ public class EditController extends HttpServlet {
     board.setContent(content);
     
 //    새로 업로드 된 파일 처리
-    String saveDir = "C:/upload";
+    String saveDir = this.getServletContext().getInitParameter("FileUploadFolder"); // web.xml 설정 사용
     String oriFileName = "";
     try {
       oriFileName = FileUtil.uploadFile(req, saveDir);
