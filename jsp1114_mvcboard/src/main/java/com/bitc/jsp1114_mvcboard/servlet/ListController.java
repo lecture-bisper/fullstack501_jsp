@@ -48,9 +48,9 @@ public class ListController extends HttpServlet {
       }
     }
 
-//    MySql의 LIMIT 연산 시 가져올 시작 번호
+//    MySql의 LIMIT 연산 시 가져올 시작 번호, index는 0부터 가져옴
     int start = (pageNum - 1) * pageSize;
-//    int end = pageNum * pageSize; // oracle 사용 시 가져올 끝 번호
+//    int end = pageNum * pageSize; // oracle 사용 시 가져올 끝 번호, MySql에서는 필요 없음
 //    현재 블록의 시작 페이지 번호
     int startPageNum = (((pageNum - 1) / blockPage) * blockPage) + 1;
 //    현재 블록의 끝 페이지 번호

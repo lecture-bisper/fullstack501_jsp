@@ -76,10 +76,13 @@
           <tfoot>
             <tr>
               <td colspan="5">
-                <ul class="pagination pagination-sm justify-content-center">
+<%--                페이지 링크 버튼 --%>
+                <ul class="pagination justify-content-center">
+<%--                  이전 페이지 버튼--%>
                   <c:if test="${startPageNum ne 1}">
                     <li class="page-item"><a class="page-link" href="/mvcboard/list.do?pageNum=${startPageNum - 1}">Prev</a></li>
                   </c:if>
+<%--                현재 페이지의 페이지 이동 블록--%>
                   <c:forEach var="i" begin="${startPageNum}" end="${endPageNum}" step="1">
                     <c:choose>
                       <c:when test="${i eq pageNum}">
@@ -90,6 +93,7 @@
                       </c:otherwise>
                     </c:choose>
                   </c:forEach>
+<%--                  다음 페이지 버튼 --%>
                   <c:if test="${endPageNum lt totalPage}">
                     <li class="page-item"><a class="page-link" href="/mvcboard/list.do?pageNum=${endPageNum + 1}">Next</a></li>
                   </c:if>
