@@ -18,6 +18,27 @@ public class MVCBoardDAO extends JDBConnect {
     super(dbDriver, dbUrl, dbUserId, dbUserPw);
   }
 
+//  전체 게시물 수 가져오기
+  public int totalCount() {
+    int result = 0;
+
+    try {
+      String sql = "SELECT COUNT(*) AS cnt FROM mvcboard ";
+
+      stmt = conn.createStatement();
+      rs = stmt.executeQuery(sql);
+
+      while (rs.next()) {
+        result = rs.getInt("cnt");
+      }
+    }
+    catch (SQLException e) {
+      printErrorMessage("조회", e.getMessage());
+    }
+
+    return result;
+  }
+
 //  전체 리스트 가져오기
   public List<MVCBoardDTO> selectMVCBoardList() {
     List<MVCBoardDTO> boardList = new ArrayList<>();
@@ -29,6 +50,41 @@ public class MVCBoardDAO extends JDBConnect {
 
       stmt = conn.createStatement();
       rs = stmt.executeQuery(sql);
+
+      while (rs.next()) {
+        MVCBoardDTO board = new MVCBoardDTO();
+
+        board.setIdx(rs.getInt("idx"));
+        board.setTitle(rs.getString("title"));
+        board.setName(rs.getString("name"));
+        board.setPostdate(rs.getString("postdate"));
+        board.setVisitcount(rs.getInt("visitcount"));
+
+        boardList.add(board);
+      }
+    }
+    catch (SQLException e) {
+      printErrorMessage("조회", e.getMessage());
+    }
+
+    return boardList;
+  }
+
+//  전체 게시물 목록 가져오기 (페이징 기능 추가)
+  public List<MVCBoardDTO> selectMVCBoardListPaging(int startNum, int postSize) {
+    List<MVCBoardDTO> boardList = new ArrayList<>();
+
+    try {
+      String sql = "SELECT idx, title, name, postdate, visitcount ";
+      sql += "FROM mvcboard ";
+      sql += "ORDER BY idx DESC ";
+      sql += "LIMIT ?, ? "; // LIMIT를 사용하여 지정한 index부터 지정한 수만큼 데이터를 조회하여 가져옴
+
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, startNum); // 데이터를 가져오기 시작할 index, index는 0부터 시작
+      pstmt.setInt(2, postSize); // 가져올 데이터 수 지정
+
+      rs = pstmt.executeQuery();
 
       while (rs.next()) {
         MVCBoardDTO board = new MVCBoardDTO();
